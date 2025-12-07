@@ -5,7 +5,7 @@ const leftBar = () => {
     <div className='leftBar'>
         <div className="menuIcons">
             <a href="/" className='menuIcon'>
-                <img src="/general/logo.png" alt="" />
+                <img src="/general/logo.png" alt="" className='logo' />
             </a>
             <a href="/" className='menuIcon'>
                 <img src="/general/home.svg" alt="" />
@@ -21,7 +21,7 @@ const leftBar = () => {
             </a>
         </div>
         <a href="/" className='menuIcon'>
-            <img src="/general/messages.svg" alt="" />
+            <img src="/general/settings.svg" alt="" />
         </a>
     </div>
   )
