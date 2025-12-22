@@ -8,16 +8,19 @@ import PostPage from './pages/postPage/postPage.jsx'
 import AuthPage from './pages/authPage/authPage.jsx'
 import ProfilePage from './pages/profilePage/profilePage.jsx'
 import SearchPage from './pages/searchPage/SearchPage.jsx'
+import MainLayout from './pages/layouts/mainLayout.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
   <Routes>
-    <Route path='/' element={ <HomePage/>} />
-    <Route path='/create' element={ <CreatePage/>} />
-    <Route path='/pin/:id' element={ <PostPage/>} />
-    <Route path='/auth' element={ <AuthPage/>} />
-    <Route path='/:username' element={ <ProfilePage/>} />
-    <Route path='/search' element={ <SearchPage/>} />
+    <Route element={ <MainLayout/>}>
+      <Route path='/' element={ <HomePage/>} />
+      <Route path='/create' element={ <CreatePage/>} />
+      <Route path='/pin/:id' element={ <PostPage/>} />
+      <Route path='/:username' element={ <ProfilePage/>} />
+      <Route path='/search' element={ <SearchPage/>} />
+    </Route>
+      <Route path='/auth' element={ <AuthPage/>} />
   </Routes>
   </BrowserRouter>
 )
