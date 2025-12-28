@@ -9,18 +9,30 @@ import AuthPage from './pages/authPage/authPage.jsx'
 import ProfilePage from './pages/profilePage/profilePage.jsx'
 import SearchPage from './pages/searchPage/SearchPage.jsx'
 import MainLayout from './pages/layouts/mainLayout.jsx'
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+// Create a client
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-  <Routes>
-    <Route element={ <MainLayout/>}>
-      <Route path='/' element={ <HomePage/>} />
-      <Route path='/create' element={ <CreatePage/>} />
-      <Route path='/pin/:id' element={ <PostPage/>} />
-      <Route path='/:username' element={ <ProfilePage/>} />
-      <Route path='/search' element={ <SearchPage/>} />
-    </Route>
-      <Route path='/auth' element={ <AuthPage/>} />
-  </Routes>
-  </BrowserRouter>
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+    <Routes>
+      <Route element={ <MainLayout/>}>
+        <Route path='/' element={ <HomePage/>} />
+        <Route path='/create' element={ <CreatePage/>} />
+        <Route path='/pin/:id' element={ <PostPage/>} />
+        <Route path='/:username' element={ <ProfilePage/>} />
+        <Route path='/search' element={ <SearchPage/>} />
+      </Route>
+        <Route path='/auth' element={ <AuthPage/>} />
+    </Routes>
+    </BrowserRouter>
+  </QueryClientProvider>
 )
