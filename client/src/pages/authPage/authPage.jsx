@@ -1,10 +1,29 @@
 import './authPage.css'
 import ImageComponent from '../../components/image/ImageComponent'
+import apiRequest from '../../utils/apiRequest'
 import { useState } from 'react'
 
 const AuthPage = () => {
   const [isRegister, setIsRegister] = useState(false)
   const [error, setError] = useState("")
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target)
+
+    const data = Object.fromEntries(formData)
+
+    try {
+      const res = await apiRequest.post(`/user/auth/${isRegister ? "register" : "login"}`,data)
+      console.log(res.data);
+      
+    } catch (error) {
+      setError(error.response.data.message)
+    }
+    console.log(data);
+    
+  }
   return (
     <div className='authPage'>
       <div className="authContainer">
@@ -13,7 +32,7 @@ const AuthPage = () => {
         {
           isRegister ?
           (
-          <form key={"registerForm"}>
+          <form key={"registerForm"} onSubmit={handleSubmit}>
           <div className="formGroup">
             <label htmlFor="username">Username</label>
             <input type="text" name='username' id='username' required placeholder='User Name'/>
@@ -35,7 +54,7 @@ const AuthPage = () => {
           {error && <p className='error'>{error}</p>}
           </form>
           ) :
-          <form key={"loginForm"}>
+          <form key={"loginForm"} onSubmit={handleSubmit}>
           <div className="formGroup">
             <label htmlFor="email">Email</label>
             <input type="text" name='email' id='email' required placeholder='Email'/>
