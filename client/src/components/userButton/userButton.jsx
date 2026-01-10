@@ -1,30 +1,53 @@
 import { useState } from 'react'
 import './userButton.css'
 import ImageComponent from '../image/ImageComponent'
+import apiRequest from '../../utils/apiRequest'
+import { Link, useNavigate } from 'react-router'
+import useAuthStore from '../../utils/authStore'
 
 const UserButton = () => {
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate()
     // Temp user
-  const currentUser = true
+  // const currentUser = true
+  const {currentUser, removeCurrentUser} = useAuthStore()
+
+  console.log(currentUser);
+  
+
+  const handleLogout = async () => {
+    try {
+      await apiRequest.post('/user/auth/logout', {})
+      removeCurrentUser()
+      navigate('/auth')
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 
   return currentUser ?  (
     <div className="userButton">
-        <ImageComponent path="/general/noAvatar.png" alt="" />
-        <ImageComponent
-        onClick={()=> setOpen((prev)=> !prev)}
-         path="/general/arrow.svg" alt="" className="arrow" />
-         {open && (
-            <div className="userOptions">
-                <div className="userOption">Profile</div>
-                <div className="userOption">Settings</div>
-                <div className="userOption">Logout</div>
-            </div>
-         )}
+        <ImageComponent path={currentUser.avatar || "/general/noAvatar.png"} alt="" />
+        <div onClick={()=> setOpen((prev)=> !prev)}>
+          <ImageComponent
+          path="/general/arrow.svg" alt="" className="arrow" />
+        </div>
+          {open && (
+              <div className="userOptions">
+                <Link to={`/profile/${currentUser.username}`} className="userOption">
+                  <div className="userOption">Profile</div>
+                </Link>
+                  <div className="userOption">Settings</div>
+                  <div className="userOption" onClick={handleLogout}>Logout</div>
+              </div>
+          )}
     </div>
   ) : (
-    <a href="/" className="loginLink">
+    <Link to={"/auth"} className="loginLink">
         Login / Sign up
-    </a>
+    </Link>
   )
 }
 

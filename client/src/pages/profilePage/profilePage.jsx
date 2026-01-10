@@ -6,6 +6,7 @@ import Gallery from '../../components/gallery/gallery'
 import { useQuery } from '@tanstack/react-query'
 import apiRequest from '../../utils/apiRequest'
 import { useParams } from 'react-router'
+import FollowButton from './FollowButton'
 
 const ProfilePage = () => {
   const [type, setType] = useState("saved")
@@ -34,12 +35,12 @@ const ProfilePage = () => {
        />
       <h1 className="profileName">{data.displayName}</h1>
       <span className="profileUsername">@{data.username}</span>
-      <div className="followCounts">3 followers . 34 following</div>
+      <div className="followCounts">{data.followerCount} {data.followerCount === 0 || data.followerCount === 1 ? "follower" : "followers"} . {data.followingCount} following</div>
       <div className="profileInteractions">
         <ImageComponent path={'/general/share.svg'} />
         <div className="profileButtons">
           <button>Message</button>
-          <button>Follow</button>
+          <FollowButton isFollowing={data.isFollowing} username={data.username} />
         </div>
         <ImageComponent path={'/general/more.svg'}/>
       </div>

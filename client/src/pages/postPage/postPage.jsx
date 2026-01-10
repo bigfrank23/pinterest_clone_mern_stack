@@ -30,7 +30,7 @@ const PostPage = () => {
           <ImageComponent path={data.media} w={736} />
         </div>
         <div className="postDetails">
-          <PostInteractions/>
+          <PostInteractions postId={id} />
           <Link to={`/${data.user.username}`} className={"postUser"}>
             <ImageComponent path={data.user.img || "/general/noAvatar.png"} />
             <span>{data.user.displayName}</span>
